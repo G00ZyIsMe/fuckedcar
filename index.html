@@ -1,0 +1,36 @@
+<script>
+document.getElementById("formCinta").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    var email = document.getElementById("email").value;
+    var tanggal = document.getElementById("tanggalLahir").value;
+
+    if (!email.endsWith("@gmail.com")) {
+        document.getElementById("pesanError").innerHTML =
+            "Harus Gmail ya sayang 😤💗";
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                tanggalLahir: tanggal
+            })
+        });
+
+        const result = await response.json();
+        console.log(result);
+
+        $("#kontener2").fadeOut();
+        $("#kontener").fadeIn(2000);
+
+    } catch (err) {
+        console.error("Error:", err);
+    }
+});
+</script>
